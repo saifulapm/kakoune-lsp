@@ -36,11 +36,11 @@ pub fn publish_diagnostics(server_id: ServerId, params: Params, ctx: &mut Contex
     let document = document.unwrap();
     let version = document.version;
     let diagnostics = &ctx.diagnostics[buffile];
-    let diagnostics_orderd_by_severity = diagnostics
+    let diagnostics_ordered_by_severity = diagnostics
         .iter()
         .sorted_unstable_by_key(|(_, x)| x.severity)
         .rev();
-    let inline_diagnostics = diagnostics_orderd_by_severity
+    let inline_diagnostics = diagnostics_ordered_by_severity
         .clone()
         .map(|(server_id, x)| {
             let server = ctx.server(*server_id);
@@ -68,7 +68,7 @@ pub fn publish_diagnostics(server_id: ServerId, params: Params, ctx: &mut Contex
         })
         .join(" ");
     let tagged_diagnostics = |tag, tag_face| {
-        diagnostics_orderd_by_severity
+        diagnostics_ordered_by_severity
             .clone()
             .filter_map(|(server_id, x)| {
                 let server = ctx.server(*server_id);
